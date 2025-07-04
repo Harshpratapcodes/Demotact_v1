@@ -42,11 +42,19 @@ import {
   TrendingUp,
   Eye,
   Lightbulb,
+  Download,
+  Scale,
+  Settings,
+  PresentationIcon as PresentationChart,
+  UserCheck,
+  FileText,
+  Database,
 } from "lucide-react"
 import { emailService, type ContactFormData } from "@/lib/email-service"
 import { HeroCarousel } from "@/components/hero-carousel"
 import { MobileNav } from "@/components/mobile-nav"
 import { FloatingShapes, WavePattern, GridPattern } from "@/components/creative-elements"
+import { Megaphone, Share2, Video } from "lucide-react"
 
 export default function PoliticalConsultingWebsite() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -63,6 +71,11 @@ export default function PoliticalConsultingWebsite() {
   const [consultationSubmitted, setConsultationSubmitted] = useState(false)
   const [contactSubmitted, setContactSubmitted] = useState(false)
   const [whatsappSubmitted, setWhatsappSubmitted] = useState(false)
+
+    // Career application modal states
+  const [showApplicationModal, setShowApplicationModal] = useState(false)
+  const [selectedJob, setSelectedJob] = useState(null)
+  const [applicationSubmitted, setApplicationSubmitted] = useState(false)
 
   const services = [
     {
@@ -282,13 +295,13 @@ export default function PoliticalConsultingWebsite() {
     },
   ]
 
-  const newsItems = [
-    "New Election Commission guidelines for digital campaigning released",
-    "Social media influence on voter behavior reaches all-time high",
-    "Ground-level campaigning remains crucial despite digital growth",
-    "Data analytics transforming political campaign strategies",
-    "Youth voter engagement strategies showing promising results",
-  ]
+  // const newsItems = [
+  //   "New Election Commission guidelines for digital campaigning released",
+  //   "Social media influence on voter behavior reaches all-time high",
+  //   "Ground-level campaigning remains crucial despite digital growth",
+  //   "Data analytics transforming political campaign strategies",
+  //   "Youth voter engagement strategies showing promising results",
+  // ]
 
   const teamMembers = [
     {
@@ -342,15 +355,100 @@ export default function PoliticalConsultingWebsite() {
     },
   ]
 
+  // Career opportunities data
+  const careerOpportunities = [
+    {
+      id: 1,
+      title: "Tech Engineer",
+      icon: Scale,
+      description:
+        "Design and implement innovative tech solutions supporting the mission in empowering grassroots leaders.",
+      hasJD: true,
+    },
+    {
+      id: 2,
+      title: "Social Media Manager",
+      icon: Share2,
+      description:
+        "Drive engagement, amplify messaging, and advance DemoTact's mission through strategic social media initiatives.",
+      hasJD: true,
+    },
+    {
+      id: 3,
+      title: "Campaign Lead",
+      icon: TrendingUp,
+      description: "Oversee and execute winning political campaigns.",
+      hasJD: true,
+    },
+    {
+      id: 4,
+      title: "Policy Analyst",
+      icon: PresentationChart,
+      description:
+        "Conduct research, analyze policies, and provide insights for advancing effective governance and political reform.",
+      hasJD: true,
+    },
+    {
+      id: 5,
+      title: "Admin Manager",
+      icon: Settings,
+      description: "Oversee office operations and support campaigns at each step.",
+      hasJD: true,
+    },
+    {
+      id: 6,
+      title: "Digital Marketing Manager",
+      icon: Smartphone,
+      description: "Drive online engagement and enhance our clients digital presence.",
+      hasJD: true,
+    },
+    {
+      id: 7,
+      title: "HR Manager",
+      icon: UserCheck,
+      description:
+        "Oversee all human resources functions and ensure alignment with DemoTact's strategic goals across multiple locations.",
+      hasJD: true,
+    },
+    {
+      id: 8,
+      title: "Campaign Manager",
+      icon: FileText,
+      description: "Develop and execute strategic political campaigns.",
+      hasJD: true,
+    },
+    {
+      id: 9,
+      title: "Data Analyst",
+      icon: Database,
+      description:
+        "Provide actionable insights and support strategic decision-making for political campaigns and governance initiatives.",
+      hasJD: true,
+    },
+  ]
+
+  const handleJobApplication = (job) => {
+    setSelectedJob(job)
+    setShowApplicationModal(true)
+  }
+
+  const handleDownloadJD = (jobTitle) => {
+    // Simulate JD download
+    const link = document.createElement("a")
+    link.href = "/placeholder.pdf"
+    link.download = `${jobTitle.replace(/\s+/g, "_")}_JD.pdf`
+    link.click()
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center ml-32 space-x-3">
             <img src="/demo_logo.png" alt="DEMOTACT" className="h-8 sm:h-10 w-auto" />
           </div>
-          <div className="hidden md:flex items-center space-x-8">
+         <div className="hidden md:flex items-center justify-end space-x-8 ml-auto mr-32">
             <a href="#about" className="text-slate-600 hover:text-primary transition-colors">
               About
             </a>
@@ -366,21 +464,27 @@ export default function PoliticalConsultingWebsite() {
             <a href="#team" className="text-slate-600 hover:text-primary transition-colors">
               Team
             </a>
+            <a href="#careers" className="text-slate-600 hover:text-primary transition-colors">
+              Careers
+            </a>
             <a href="#contact" className="text-slate-600 hover:text-primary transition-colors">
               Contact
             </a>
+
+              
           </div>
           <div className="flex items-center space-x-4">
-            <Button
+            {/* <Button
               className="hidden sm:flex bg-button-gradient hover:bg-reverse-gradient text-white border-0"
               onClick={() => setShowConsultationModal(true)}
             >
               Book Consultation
-            </Button>
+            </Button> */}
             <MobileNav onBookConsultation={() => setShowConsultationModal(true)} />
           </div>
         </div>
       </nav>
+
 
       {/* Hero Section with Video Background and Carousel */}
       <section className="relative w-full h-screen overflow-hidden">
@@ -396,16 +500,24 @@ export default function PoliticalConsultingWebsite() {
         {/* <FloatingShapes /> */}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-aqua/20 to-teal/20 z-5" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-aqua/90 to-teal/80 z-5" />
 
         {/* Carousel Content */}
+
         <div className="relative z-10 h-full">
           <HeroCarousel onBookConsultation={() => setShowConsultationModal(true)} />
         </div>
+
+         {/* <div className="relative z-10 h-full">
+          <HeroTypographySlider  />
+        </div> */}
+
+
+        
       </section>
 
       {/* Scrolling News Ticker */}
-      <div className="bg-section-gradient text-white py-2 overflow-hidden">
+      {/* <div className="bg-section-gradient text-white py-2 overflow-hidden">
         <motion.div
           className="flex whitespace-nowrap"
           animate={{ x: isNewsScrolling ? [-1000, 0] : 0 }}
@@ -417,13 +529,13 @@ export default function PoliticalConsultingWebsite() {
             </span>
           ))}
         </motion.div>
-      </div>
+      </div> */}
 
       {/* About Section */}
-      <section id="about" className="py-12 sm:py-20 bg-white relative overflow-hidden">
+      {/* <section id="about" className="py-12 sm:py-20 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left Side - Image */}
+           
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -438,12 +550,12 @@ export default function PoliticalConsultingWebsite() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
               </div>
-              {/* Floating Elements */}
+            
               <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-aqua/10 rounded-full blur-xl"></div>
             </motion.div>
 
-            {/* Right Side - Content */}
+         
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -485,6 +597,130 @@ export default function PoliticalConsultingWebsite() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section> */}
+
+            <section
+        id="about"
+        className="py-12 sm:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-navy text-white relative overflow-hidden"
+      >
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">About Us</h2>
+            <div className="max-w-5xl mx-auto">
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-2">
+                Demotact is a team of young, enthusiastic professionals dedicated to empowering dynamic leaders, change-makers, and aspiring youth who wish to enter electoral politics at any level.
+                We are a group of seasoned political consultants and experienced professionals who have contributed across the political spectrum since the inception of this field. From grassroots campaigns to high-level strategy, Demotact brings together expertise, innovation, and passion to help you navigate and succeed in the world of politics.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Campaign Initiatives Section - Simplified */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-16"
+          >
+            <h3 className="text-lg sm:text-xl font-bold text-center text-white mb-8">
+              Our campaign initiatives include:
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+              {[
+                {
+                  icon: Target,
+                  title: "Policy suggestions",
+                  description: "Comprehensive policy framework and strategic recommendations",
+                },
+                {
+                  icon: Users,
+                  title: "Grassroots campaigns",
+                  description: "Community-level engagement and voter mobilization",
+                },
+                {
+                  icon: Users,
+                  title: "Stakeholder alignment",
+                  description: "Building coalitions and strategic partnerships",
+                },
+                {
+                  icon: Megaphone,
+                  title: "High-octane narrative-defining events",
+                  description: "Impactful events that shape public discourse",
+                },
+                {
+                  icon: Share2,
+                  title: "Social media amplification",
+                  description: "Digital outreach and online community building",
+                },
+                {
+                  icon: Video,
+                  title: "Effective multimedia strategy and campaigns",
+                  description: "Comprehensive multimedia content and campaigns",
+                },
+              ].map((initiative, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+                  className="group"
+                >
+                  <div className="bg-slate-800/30 backdrop-blur-sm border border-white/10 rounded-lg p-4 sm:p-5 hover:bg-slate-700/40 transition-all duration-300 hover:border-primary/30 h-full flex flex-col min-h-[140px]">
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-aqua rounded-full mb-4 group-hover:scale-110 transition-transform duration-300 mx-auto">
+                      <initiative.icon className="h-6 w-6 text-white" />
+                    </div>
+
+                    <h4 className="text-sm font-semibold text-white mb-2 group-hover:text-primary transition-colors duration-300 text-center">
+                      {initiative.title}
+                    </h4>
+
+                    <p className="text-white/80 text-xs leading-relaxed flex-1 text-center">{initiative.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Mission Statement - Simplified */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-center max-w-5xl mx-auto"
+          >
+            <div className="bg-slate-800/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8">
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-6">
+                We aim to promote and facilitate constructive dialogue and interaction among young mission-driven
+                professionals who want to revolutionise the field of electioneering, policy-making and governance
+                advisory. We also aspire to collaborate with like-minded individuals to find common ground on the most
+                important issues and elevate them to positions where they can affect real change.
+              </p>
+
+              {/* Call to Action */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  className="bg-gradient-to-r from-primary to-aqua hover:from-aqua hover:to-teal text-white border-0 px-6 py-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
+                  onClick={() => setShowConsultationModal(true)}
+                >
+                  Start Your Campaign
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-white/30 text-white hover:bg-white hover:text-slate-900 backdrop-blur-sm px-6 py-2 bg-transparent text-sm"
+                  onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}
+                >
+                  Explore Services
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1191,6 +1427,86 @@ export default function PoliticalConsultingWebsite() {
           </div>
         </div>
       </section>
+
+         {/* Careers Section */}
+      <section
+        id="careers"
+        className="py-12 sm:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-navy text-white relative overflow-hidden"
+      >
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8">Careers</h2>
+            <div className="max-w-5xl mx-auto">
+              <p className="text-teal font-semibold text-lg sm:text-xl mb-4">WE ARE WAITING TO WELCOME YOU!</p>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-8">
+                Join our team and embark on a rewarding journey with us. Explore our career opportunities and take the
+                next step towards making a difference in India's democratic story. We look forward to welcoming you
+                aboard!
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Career Cards Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto"
+          >
+            {careerOpportunities.map((job, index) => (
+              <motion.div
+                key={job.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+                className="group"
+              >
+                <div className="bg-white rounded-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col min-h-[280px]">
+                  {/* Job Icon */}
+                  <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-teal to-teal rounded-full mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <job.icon className="h-6 w-6 text-white" />
+                  </div>
+
+                  {/* Job Title and JD Button */}
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-slate-800 group-hover:text-primary transition-colors duration-300">
+                      {job.title}
+                    </h3>
+                    {job.hasJD && (
+                      <Button
+                        size="sm"
+                        className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded-md"
+                        onClick={() => handleDownloadJD(job.title)}
+                      >
+                        <Download className="h-3 w-3 mr-1" />
+                        Download JD
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Job Description */}
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-6">{job.description}</p>
+
+                  {/* Apply Button */}
+                  <Button
+                    className="w-full bg-teal hover:bg-teal text-white font-semibold py-3 rounded-md transition-all duration-300 hover:shadow-lg"
+                    onClick={() => handleJobApplication(job)}
+                  >
+                    APPLY NOW
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+
 
       {/* Contact/Consultation Form */}
       <section id="contact" className="py-20 bg-contact-gradient text-white relative overflow-hidden">
@@ -2025,6 +2341,125 @@ export default function PoliticalConsultingWebsite() {
                 Close
               </Button>
             </motion.div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+       {/* Job Application Modal */}
+      <Dialog open={showApplicationModal} onOpenChange={setShowApplicationModal}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center">
+              {selectedJob && (
+                <>
+                  <div className="w-8 h-8 bg-gradient-to-br from-teal to-teal rounded-full flex items-center justify-center mr-3">
+                    <selectedJob.icon className="h-4 w-4 text-white" />
+                  </div>
+                  Apply for {selectedJob.title}
+                </>
+              )}
+            </DialogTitle>
+            <DialogDescription>
+              Please fill out the application form below. We'll review your application and get back to you soon.
+            </DialogDescription>
+          </DialogHeader>
+          {applicationSubmitted ? (
+            <div className="text-center py-6">
+              <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Application Submitted!</h3>
+              <p className="text-gray-600 mb-6">
+                Thank you for your interest in the {selectedJob?.title} position. Our HR team will review your
+                application and contact you within 5-7 business days.
+              </p>
+              <Button
+                onClick={() => {
+                  setApplicationSubmitted(false)
+                  setShowApplicationModal(false)
+                  setSelectedJob(null)
+                }}
+                className="bg-primary hover:bg-primary/90"
+              >
+                Close
+              </Button>
+            </div>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                setApplicationSubmitted(true)
+              }}
+              className="grid gap-4 py-4"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                  <Input type="text" placeholder="First Name" required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                  <Input type="text" placeholder="Last Name" required />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                <Input type="email" placeholder="your@email.com" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                <Input type="tel" placeholder="+91 XXXXX XXXXX" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Current Location *</label>
+                <Input type="text" placeholder="City, State" required />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience *</label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select experience" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="0-1">0-1 years</SelectItem>
+                    <SelectItem value="2-3">2-3 years</SelectItem>
+                    <SelectItem value="4-5">4-5 years</SelectItem>
+                    <SelectItem value="6-10">6-10 years</SelectItem>
+                    <SelectItem value="10+">10+ years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter</label>
+                <Textarea
+                  placeholder="Tell us why you're interested in this position and what makes you a great fit..."
+                  rows={4}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV *</label>
+                <Input type="file" accept=".pdf,.doc,.docx" required />
+                <p className="text-xs text-gray-500 mt-1">Please upload your resume in PDF, DOC, or DOCX format</p>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowApplicationModal(false)}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="flex-1 bg-teal hover:bg-teal text-white">
+                  Submit Application
+                </Button>
+              </div>
+            </form>
           )}
         </DialogContent>
       </Dialog>
