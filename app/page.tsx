@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
+import CarouselNavigation from "@/components/carousel-navigation"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Dialog,
@@ -49,6 +51,7 @@ import {
   UserCheck,
   FileText,
   Database,
+  Quote
 } from "lucide-react"
 import { emailService, type ContactFormData } from "@/lib/email-service"
 import { HeroCarousel } from "@/components/hero-carousel"
@@ -292,32 +295,32 @@ export default function PoliticalConsultingWebsite() {
 
   const teamMembers = [
     {
-      name: "Dr. Arjun Mehta",
-      role: "Chief Campaign Strategist",
-      experience: "15+ years",
+      name: "Akash Patil",
+      role: "Campaign Strategist",
+      experience: "5+ years",
       expertise: "Electoral Strategy, Policy Analysis",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Akash_Patil.jpg?height=300&width=300",
     },
     {
-      name: "Kavya Reddy",
-      role: "Digital Media Head",
-      experience: "10+ years",
+      name: "Sameer More Patil",
+      role: "Feild Campaign Organizer",
+      experience: "7+ years",
       expertise: "Social Media, Content Strategy",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Sameer_more_Patil.jpg?height=300&width=300",
     },
     {
-      name: "Rohit Singh",
-      role: "Data Analytics Lead",
-      experience: "8+ years",
+      name: "Saud Ahmed",
+      role: "Media",
+      experience: "5+ years",
       expertise: "Voter Analytics, Polling",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Saud_Agmed.jpg?height=300&width=300",
     },
     {
-      name: "Meera Joshi",
-      role: "Ground Operations Manager",
-      experience: "12+ years",
+      name: "Kuntal Ghose",
+      role: "Designer",
+      experience: "3+ years",
       expertise: "Booth Management, Volunteer Coordination",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/kuntal.jpg?height=300&width=300",
     },
   ]
 
@@ -527,60 +530,123 @@ export default function PoliticalConsultingWebsite() {
             className="mb-16"
           >
             <h3 className="text-lg sm:text-xl font-bold text-center text-white mb-8">
-              Our campaign initiatives include:
+              Our Professional Assistance Includes:
             </h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
-              {[
-                {
-                  icon: Target,
-                  title: "Policy suggestions",
-                  description: "Comprehensive policy framework and strategic recommendations",
-                },
-                {
-                  icon: Users,
-                  title: "Grassroots campaigns",
-                  description: "Community-level engagement and voter mobilization",
-                },
-                {
-                  icon: Users,
-                  title: "Stakeholder alignment",
-                  description: "Building coalitions and strategic partnerships",
-                },
-                {
-                  icon: Megaphone,
-                  title: "High-octane narrative-defining events",
-                  description: "Impactful events that shape public discourse",
-                },
-                {
-                  icon: Share2,
-                  title: "Social media amplification",
-                  description: "Digital outreach and online community building",
-                },
-                {
-                  icon: Video,
-                  title: "Effective multimedia strategy and campaigns",
-                  description: "Comprehensive multimedia content and campaigns",
-                },
-              ].map((initiative, index) => (
+              {services.map((service, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
-                  className="group"
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  className="group h-full"
                 >
-                  <div className="bg-slate-800/30 backdrop-blur-sm border border-white/10 rounded-lg p-4 sm:p-5 hover:bg-slate-700/40 transition-all duration-300 hover:border-primary/30 h-full flex flex-col min-h-[140px]">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary to-aqua rounded-full mb-4 group-hover:scale-110 transition-transform duration-300 mx-auto">
-                      <initiative.icon className="h-6 w-6 text-white" />
-                    </div>
-
-                    <h4 className="text-sm font-semibold text-white mb-2 group-hover:text-primary transition-colors duration-300 text-center">
-                      {initiative.title}
-                    </h4>
-
-                    <p className="text-white/80 text-xs leading-relaxed flex-1 text-center">{initiative.description}</p>
-                  </div>
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/30 bg-slate-800/30 flex flex-col">
+                    <CardHeader className="flex-shrink-0">
+                      <div className="w-12 sm:w-16 h-12 sm:h-16 bg-card-gradient rounded-full flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <service.icon className="h-6 sm:h-8 w-6 sm:w-8 text-white" />
+                      </div>
+                      <CardTitle className="text-lg sm:text-xl text-white">{service.title}</CardTitle>
+                      <CardDescription className="text-white/80 text-sm sm:text-base">
+                        {service.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col">
+                      <ul className="space-y-2 mb-4 sm:mb-6 flex-1">
+                        {service.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center text-xs sm:text-sm text-white/80">
+                            <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-primary mr-2 flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full group-hover:bg-button-gradient group-hover:text-white group-hover:border-transparent transition-all duration-300 text-sm sm:text-base bg-transparent border-white/30 text-white hover:bg-white hover:text-slate-900"
+                          >
+                            Learn More
+                            <ArrowRight className="ml-2 h-3 sm:h-4 w-3 sm:w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-4xl bg-white text-slate-900 rounded-xl shadow-xl overflow-y-auto max-h-[90vh]">
+                          <DialogHeader>
+                            <DialogTitle className="flex items-center text-2xl text-slate-800 mb-2">
+                              <div className="w-10 h-10 bg-card-gradient rounded-full flex items-center justify-center mr-3">
+                                <service.icon className="h-6 w-6 text-white" />
+                              </div>
+                              {service.title}
+                            </DialogTitle>
+                            <DialogDescription className="text-lg text-gray-600">
+                              {service.detailedInfo.overview}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+                            {/* Left Column */}
+                            <div className="space-y-6">
+                              <div>
+                                <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
+                                  <Target className="h-5 w-5 text-primary mr-2" />
+                                  Our Process
+                                </h4>
+                                <ul className="space-y-3">
+                                  {service.detailedInfo.process.map((step, idx) => (
+                                    <li key={idx} className="flex items-start text-sm text-gray-600">
+                                      <div className="w-6 h-6 bg-primary/10 text-primary rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">
+                                        {idx + 1}
+                                      </div>
+                                      {step}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
+                                  <Award className="h-5 w-5 text-teal mr-2" />
+                                  Key Benefits
+                                </h4>
+                                <ul className="space-y-2">
+                                  {service.detailedInfo.benefits.map((benefit, idx) => (
+                                    <li key={idx} className="flex items-center text-sm text-gray-600">
+                                      <CheckCircle className="h-4 w-4 text-teal mr-2 flex-shrink-0" />
+                                      {benefit}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                            {/* Right Column */}
+                            <div className="space-y-6">
+                              <div>
+                                <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
+                                  <FileText className="h-5 w-5 text-primary mr-2" />
+                                  Case Example
+                                </h4>
+                                <div className="bg-gray-50 rounded-lg p-4 text-gray-700 text-sm">
+                                  {service.detailedInfo.caseExample}
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="bg-gray-50 rounded-lg p-4 text-gray-700 text-sm">
+                                  <span className="font-semibold">Pricing:</span> {service.detailedInfo.pricing}
+                                </div>
+                                <div className="bg-gray-50 rounded-lg p-4 text-gray-700 text-sm">
+                                  <span className="font-semibold">Duration:</span> {service.detailedInfo.duration}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="pt-4 border-t border-gray-200">
+                            <Button className="w-full bg-button-gradient hover:bg-reverse-gradient text-white border-0">
+                              Get Started with {service.title}
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               ))}
             </div>
@@ -623,6 +689,187 @@ export default function PoliticalConsultingWebsite() {
         </div>
       </section>
 
+      {/* CEO Section */}
+      {/* <section id="ceo" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Meet Our Founder</h2>
+              <p className="text-xl text-gray-600">Leading with experience, vision, and proven results</p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-1 lg:order-1">
+                <div className="relative">
+                  <div className="aspect-[4/5] relative overflow-hidden rounded-2xl shadow-2xl">
+                    <Image
+                      src="/ad.jpg?height=600&width=480"
+                      alt="Pradeep Singh, CEO"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-4 rounded-lg shadow-lg">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold">15+</div>
+                      <div className="text-sm">Years Experience</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="order-2 lg:order-2">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2">Pradeep Singh</h3>
+                    <p className="text-xl text-blue-600 font-semibold mb-4">Chief Executive Officer & Founder</p>
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                      With over 15 years of experience in political consulting, Pradeep has managed more than 50
+                      successful campaigns across federal, state, and local levels. His strategic expertise and
+                      innovative approach have helped candidates from diverse backgrounds achieve electoral success.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="text-xl font-semibold text-gray-900">Key Achievements</h4>
+                    <div className="grid gap-3">
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600">
+                          Led 12 successful gubernatorial campaigns with 85% win rate
+                        </span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600">Former Senior Executive to 10+ state and national level campaigns</span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600">
+                          Featured speaker at National Political Strategy Conference
+                        </span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600">Master's in Political Science from Georgetown University</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-lg border-l-4 border-blue-600">
+                    <Quote className="h-8 w-8 text-blue-600 mb-4" />
+                    <p className="text-gray-700 italic text-lg mb-4">
+                      "Success in politics isn't just about having the right message—it's about delivering that message
+                      to the right people at the right time through the right channels. That's where strategic
+                      consulting makes all the difference."
+                    </p>
+                    <p className="text-gray-900 font-semibold">— Pradeep Singh, Founder</p>
+                  </div>
+                </div>
+              </div>
+
+            
+            </div>
+          </div>
+        </div>
+      </section> */}
+      <section
+        id="ceo"
+        className="py-20 bg-gradient-to-br from-[#f0fdfa] via-blue-50 to-cyan-100 relative overflow-hidden"
+        style={{ fontFamily: 'Segoe UI, sans-serif' }}
+      >
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2dd4bf]/10 to-blue-500/10"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-[#5eead4]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          <div className="max-w-6xl mx-auto font-sans">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#0f766e] to-blue-700 bg-clip-text text-transparent mb-4 font-sans">
+                Meet Our Founder
+              </h2>
+              <p className="text-xl text-gray-600">Leading with experience, vision, and proven results</p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center font-sans">
+              <div className="order-2 lg:order-2">
+                <div className="space-y-6 font-sans">
+                  <div>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2 font-sans">Pradeep Singh</h3>
+                    <p className="text-xl text-blue-600 font-semibold mb-4 font-sans">Chief Executive Officer & Founder</p>
+                    <p className="text-gray-600 text-lg leading-relaxed font-sans">
+                      With over 15 years of experience in political consulting, Pradeep has managed more than 80
+                      successful campaigns across federal, state, and local levels. His strategic expertise and
+                      innovative approach have helped candidates from diverse backgrounds achieve electoral success.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 font-sans">
+                    <h4 className="text-xl font-semibold text-gray-900 font-sans">Key Achievements</h4>
+                    <div className="grid gap-3 font-sans">
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600 font-sans">
+                          Led 12 successful gubernatorial campaigns with 85% win rate
+                        </span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600 font-sans">Former Senior Executive to 10+ state and national level campaigns</span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600 font-sans">
+                          Featured speaker at National Political Strategy Conference
+                        </span>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600 font-sans">Master's in Political Science from Georgetown University</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-6 rounded-lg border-l-4 border-blue-600 font-sans">
+                    <Quote className="h-8 w-8 text-blue-600 mb-4" />
+                    <p className="text-gray-700 italic text-lg mb-4 font-sans">
+                      "Success in politics isn't just about having the right message—it's about delivering that message
+                      to the right people at the right time through the right channels. That's where strategic
+                      consulting makes all the difference."
+                    </p>
+                    <p className="text-gray-900 font-semibold font-sans">— Pradeep Singh, Founder</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="order-1 lg:order-1">
+                <div className="relative">
+                  <div className="aspect-[4/5] relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-[#ccfbf1] to-blue-100 p-1">
+                    <div className="w-full h-full rounded-3xl overflow-hidden">
+                      <Image
+                        src="/ad.jpg?height=600&width=480"
+                        alt="Pradeep Singh, Founder"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Floating stats cards */}
+                  <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-[#14b8a6] to-blue-600 text-white p-6 rounded-2xl shadow-2xl backdrop-blur-sm">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold">15+</div>
+                      <div className="text-sm text-[#ccfbf1]">Years Experience</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {/* Team Section */}
@@ -714,7 +961,7 @@ export default function PoliticalConsultingWebsite() {
       </section> */}
 
       {/* Services Section */}
-      <section
+      {/* <section
         id="services"
         className="py-12 sm:py-20 bg-gradient-to-br from-gray-50 to-primary-50 relative overflow-hidden"
       >
@@ -784,7 +1031,7 @@ export default function PoliticalConsultingWebsite() {
                         </DialogHeader>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
-                          {/* Left Column */}
+                    
                           <div className="space-y-6">
                             <div>
                               <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
@@ -819,7 +1066,7 @@ export default function PoliticalConsultingWebsite() {
                             </div>
                           </div>
 
-                          {/* Right Column */}
+                    
                           <div className="space-y-6">
                             <div className="bg-gradient-to-br from-primary-50 to-aqua/10 p-6 rounded-lg border border-primary/20">
                               <h4 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
@@ -863,7 +1110,7 @@ export default function PoliticalConsultingWebsite() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
           <section
@@ -897,7 +1144,7 @@ export default function PoliticalConsultingWebsite() {
                 <img
                   src={member.image || "/placeholder.svg"}
                   alt={member.name}
-                  className="w-full h-48 sm:h-64 object-cover"
+                  className="w-full h-48 sm:h-96 object-cover"
                 />
                 <div className="p-4 sm:p-6 flex-1 flex flex-col">
                   <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">{member.name}</h3>
@@ -910,7 +1157,7 @@ export default function PoliticalConsultingWebsite() {
           </div>
 
         
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -953,7 +1200,7 @@ export default function PoliticalConsultingWebsite() {
                 Deep understanding of local issues and community-driven campaign approaches.
               </p>
             </motion.div>
-          </div>
+          </div> */}
         </div>
         <WavePattern />
       </section>
@@ -1131,7 +1378,7 @@ export default function PoliticalConsultingWebsite() {
       </section> */}
 
       {/* Case Studies */}
-      <section id="cases" className="py-20 bg-white">
+      {/* <section id="cases" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -1139,7 +1386,7 @@ export default function PoliticalConsultingWebsite() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Success Stories</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">Our Campaigns</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Real campaigns, real results. See how we've helped leaders achieve electoral success.
             </p>
@@ -1220,6 +1467,460 @@ export default function PoliticalConsultingWebsite() {
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
+          </div>
+        </div>
+      </section> */}
+
+            {/* Our Campaigns Section */}
+            <section className="py-20 bg-gradient-to-br from-gray-50 via-[#f0fdfa] to-blue-50 relative overflow-hidden">
+        {/* Enhanced Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f0fdfa]/40 to-blue-100/40"></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-[#14b8a6]/10 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-48 h-48 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm rounded-full border border-[#99f6e4]/50 mb-8 shadow-lg">
+              <div className="w-3 h-3 bg-[#14b8a6] rounded-full mr-3 animate-pulse"></div>
+              <span className="text-[#0f766e] font-semibold text-lg">Success Stories</span>
+              <div className="ml-3 px-3 py-1 bg-[#14b8a6]/10 rounded-full">
+                <span className="text-[#0f766e] text-sm font-medium">200+ Wins</span>
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#0f766e] via-[#14b8a6] to-blue-700 bg-clip-text text-transparent mb-6 leading-tight">
+              Our Campaigns
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Discover how we've helped candidates across the nation achieve electoral success through strategic
+              consulting
+            </p>
+          </div>
+
+          {/* Simple Centered Carousel with Infinite Loop */}
+          <div className="max-w-7xl mx-auto">
+            <div className="relative">
+              {/* Navigation Arrows */}
+              <button
+                id="prevBtn"
+                className="absolute left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-[#ccfbf1]/50 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300"
+              >
+                <svg className="w-5 h-5 text-[#0f766e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                id="nextBtn"
+                className="absolute right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-[#ccfbf1]/50 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300"
+              >
+                <svg className="w-5 h-5 text-[#0f766e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Cards Container - Centered with symmetry */}
+              <div className="overflow-hidden">
+                <div
+                  id="cards-container"
+                  className="flex gap-8 transition-transform duration-[600ms] ease-out"
+                  style={{ justifyContent: "flex-start" }}
+                >
+                  {/* Campaign Card 1 - Increased width */}
+                  <div className="flex-shrink-0 w-[400px]">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ccfbf1]/30 hover:shadow-2xl transition-shadow duration-300 h-[480px]">
+                      <div className="h-56 bg-gradient-to-br from-[#14b8a6] to-blue-600 relative overflow-hidden">
+                        <img
+                          src="/placeholder.svg?height=240&width=400&text=Gubernatorial+Campaign+Victory+Texas"
+                          alt="Gubernatorial Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-semibold">2023</span>
+                        </div>
+                        <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-bold">+12%</span>
+                        </div>
+
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="text-sm font-medium opacity-90">Gubernatorial Race</div>
+                          <div className="text-xl font-bold">Victory in Texas</div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Sarah Johnson Campaign</h3>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          Led a comprehensive digital strategy that increased voter turnout by 34% in key demographics
+                          across multiple counties.
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="text-center p-3 bg-[#f0fdfa] rounded-lg">
+                            <div className="text-lg font-bold text-[#0f766e]">34%</div>
+                            <div className="text-xs text-gray-600">Turnout ↑</div>
+                          </div>
+                          <div className="text-center p-3 bg-blue-50 rounded-lg">
+                            <div className="text-lg font-bold text-blue-700">$2.1M</div>
+                            <div className="text-xs text-gray-600">Raised</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span className="text-sm font-medium text-green-700">Won by 12%</span>
+                          </div>
+                          <div className="bg-[#f0fdfa] text-[#0f766e] px-3 py-1 rounded text-xs font-medium">
+                            Gubernatorial
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Campaign Card 2 - Increased width */}
+                  <div className="flex-shrink-0 w-[400px]">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ccfbf1]/30 hover:shadow-2xl transition-shadow duration-300 h-[480px]">
+                      <div className="h-56 bg-gradient-to-br from-blue-600 to-[#14b8a6] relative overflow-hidden">
+                        <img
+                          src="/placeholder.svg?height=240&width=400&text=Senate+Campaign+Historic+Win"
+                          alt="Senate Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-semibold">2022</span>
+                        </div>
+                        <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-bold">+8%</span>
+                        </div>
+
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="text-sm font-medium opacity-90">U.S. Senate Race</div>
+                          <div className="text-xl font-bold">Historic Win</div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Michael Chen Campaign</h3>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          Orchestrated grassroots mobilization reaching over 2.3 million voters across the state with
+                          innovative outreach programs.
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="text-center p-3 bg-blue-50 rounded-lg">
+                            <div className="text-lg font-bold text-blue-700">2.3M</div>
+                            <div className="text-xs text-gray-600">Voters</div>
+                          </div>
+                          <div className="text-center p-3 bg-[#f0fdfa] rounded-lg">
+                            <div className="text-lg font-bold text-[#0f766e]">15K</div>
+                            <div className="text-xs text-gray-600">Volunteers</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span className="text-sm font-medium text-green-700">Won by 8%</span>
+                          </div>
+                          <div className="bg-blue-50 text-blue-700 px-3 py-1 rounded text-xs font-medium">
+                            U.S. Senate
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Campaign Card 3 - Increased width */}
+                  <div className="flex-shrink-0 w-[400px]">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ccfbf1]/30 hover:shadow-2xl transition-shadow duration-300 h-[480px]">
+                      <div className="h-56 bg-gradient-to-br from-purple-600 to-[#14b8a6] relative overflow-hidden">
+                        <img
+                          src="/placeholder.svg?height=240&width=400&text=Mayoral+Campaign+Landslide+Victory"
+                          alt="Mayoral Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-semibold">2023</span>
+                        </div>
+                        <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-bold">+24%</span>
+                        </div>
+
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="text-sm font-medium opacity-90">Mayoral Race</div>
+                          <div className="text-xl font-bold">Landslide Victory</div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Maria Rodriguez Campaign</h3>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          Implemented innovative community outreach programs that secured 67% of the vote in a highly
+                          competitive race.
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="text-center p-3 bg-purple-50 rounded-lg">
+                            <div className="text-lg font-bold text-purple-700">67%</div>
+                            <div className="text-xs text-gray-600">Vote Share</div>
+                          </div>
+                          <div className="text-center p-3 bg-[#f0fdfa] rounded-lg">
+                            <div className="text-lg font-bold text-[#0f766e]">89%</div>
+                            <div className="text-xs text-gray-600">Approval</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span className="text-sm font-medium text-green-700">Won by 24%</span>
+                          </div>
+                          <div className="bg-purple-50 text-purple-700 px-3 py-1 rounded text-xs font-medium">
+                            Mayoral
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Campaign Card 4 - Increased width */}
+                  <div className="flex-shrink-0 w-[400px]">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ccfbf1]/30 hover:shadow-2xl transition-shadow duration-300 h-[480px]">
+                      <div className="h-56 bg-gradient-to-br from-orange-500 to-[#14b8a6] relative overflow-hidden">
+                        <img
+                          src="/placeholder.svg?height=240&width=400&text=Congressional+Upset+Victory"
+                          alt="Congressional Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-semibold">2022</span>
+                        </div>
+                        <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-bold">+6%</span>
+                        </div>
+
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="text-sm font-medium opacity-90">Congressional Race</div>
+                          <div className="text-xl font-bold">Upset Victory</div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">David Thompson Campaign</h3>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          Turned a 15-point deficit into a decisive victory through targeted messaging and strategic
+                          voter outreach.
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="text-center p-3 bg-orange-50 rounded-lg">
+                            <div className="text-lg font-bold text-orange-700">-15→+6</div>
+                            <div className="text-xs text-gray-600">Comeback</div>
+                          </div>
+                          <div className="text-center p-3 bg-[#f0fdfa] rounded-lg">
+                            <div className="text-lg font-bold text-[#0f766e]">78%</div>
+                            <div className="text-xs text-gray-600">Ad Recall</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span className="text-sm font-medium text-green-700">Won by 6%</span>
+                          </div>
+                          <div className="bg-orange-50 text-orange-700 px-3 py-1 rounded text-xs font-medium">
+                            Congressional
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Campaign Card 5 - Increased width */}
+                  <div className="flex-shrink-0 w-[400px]">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#ccfbf1]/30 hover:shadow-2xl transition-shadow duration-300 h-[480px]">
+                      <div className="h-56 bg-gradient-to-br from-[#14b8a6] to-indigo-600 relative overflow-hidden">
+                        <img
+                          src="/placeholder.svg?height=240&width=400&text=State+House+First+Time+Winner"
+                          alt="State Legislature Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-semibold">2023</span>
+                        </div>
+                        <div className="absolute top-4 left-4 bg-green-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-xs font-bold">+9%</span>
+                        </div>
+
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="text-sm font-medium opacity-90">State House Race</div>
+                          <div className="text-xl font-bold">First-Time Winner</div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Jennifer Park Campaign</h3>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          Helped first-time candidate secure victory through comprehensive voter education and community
+                          engagement.
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="text-center p-3 bg-indigo-50 rounded-lg">
+                            <div className="text-lg font-bold text-indigo-700">1st</div>
+                            <div className="text-xs text-gray-600">Time Run</div>
+                          </div>
+                          <div className="text-center p-3 bg-[#f0fdfa] rounded-lg">
+                            <div className="text-lg font-bold text-[#0f766e]">92%</div>
+                            <div className="text-xs text-gray-600">Name ID</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span className="text-sm font-medium text-green-700">Won by 9%</span>
+                          </div>
+                          <div className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded text-xs font-medium">
+                            State House
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Indicators - 5 dots for all cards */}
+              <div className="flex justify-center mt-8 space-x-2">
+                <div
+                  id="dot-0"
+                  className="w-3 h-3 rounded-full bg-[#14b8a6] transition-all duration-300 cursor-pointer transform scale-110"
+                ></div>
+                <div
+                  id="dot-1"
+                  className="w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 cursor-pointer"
+                ></div>
+                <div
+                  id="dot-2"
+                  className="w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 cursor-pointer"
+                ></div>
+                <div
+                  id="dot-3"
+                  className="w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 cursor-pointer"
+                ></div>
+                <div
+                  id="dot-4"
+                  className="w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 cursor-pointer"
+                ></div>
+              </div>
+            </div>
+
+            {/* Rest of the stats and CTA sections remain the same */}
+            {/* Enhanced Stats Row */}
+            <div className="mt-20 grid md:grid-cols-4 gap-6">
+              <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-[#ccfbf1]/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#14b8a6] to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                    />
+                  </svg>
+                </div>
+                <div className="text-4xl font-bold bg-gradient-to-r from-[#14b8a6] to-blue-600 bg-clip-text text-transparent mb-2">
+                  85%
+                </div>
+                <div className="text-gray-600 font-semibold">Win Rate</div>
+                <div className="text-xs text-gray-500 mt-1">Above industry average</div>
+              </div>
+              <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-[#ccfbf1]/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#14b8a6] to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="text-4xl font-bold bg-gradient-to-r from-[#14b8a6] to-blue-600 bg-clip-text text-transparent mb-2">
+                  200+
+                </div>
+                <div className="text-gray-600 font-semibold">Campaigns</div>
+                <div className="text-xs text-gray-500 mt-1">Successfully managed</div>
+              </div>
+              <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-[#ccfbf1]/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#14b8a6] to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                    />
+                  </svg>
+                </div>
+                <div className="text-4xl font-bold bg-gradient-to-r from-[#14b8a6] to-blue-600 bg-clip-text text-transparent mb-2">
+                  50M+
+                </div>
+                <div className="text-gray-600 font-semibold">Voters Reached</div>
+                <div className="text-xs text-gray-500 mt-1">Across all campaigns</div>
+              </div>
+              <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-[#ccfbf1]/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#14b8a6] to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                    />
+                  </svg>
+                </div>
+                <div className="text-4xl font-bold bg-gradient-to-r from-[#14b8a6] to-blue-600 bg-clip-text text-transparent mb-2">
+                  15
+                </div>
+                <div className="text-gray-600 font-semibold">States</div>
+                <div className="text-xs text-gray-500 mt-1">Nationwide presence</div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="mt-16 text-center">
+              <div className="bg-gradient-to-r from-[#14b8a6] to-blue-600 rounded-3xl p-8 shadow-2xl">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Join Our Success Stories?</h3>
+                <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
+                  Let's discuss how we can help your campaign achieve victory with our proven strategies.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="bg-white text-[#14b8a6] hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg transition-colors">
+                    Schedule Consultation
+                  </button>
+                  <button className="border border-white text-white hover:bg-white/10 bg-transparent px-6 py-3 rounded-lg transition-colors">
+                    View All Case Studies
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Add Carousel Navigation Component */}
+            <CarouselNavigation />
           </div>
         </div>
       </section>

@@ -41,7 +41,7 @@ const slideUpVariants = {
 // Slower, smoother transition settings
 const transitionConfig = {
   duration: 1.0, // Increased from 1.2 to 2.0 seconds
-  ease: [0.16, 1, 0.3, 1], // Smoother easing curve
+  ease: [0.16, 1, 0.3, 1] as any, // Smoother easing curve, cast as any for TS compatibility
 }
 
 export function HeroCarousel({ onBookConsultation }: HeroTypographyProps) {
